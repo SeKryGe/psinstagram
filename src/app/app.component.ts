@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, pluck } from 'rxjs';
-
 
 
 
 export interface AnimalResponse {
   message: {
-    [race: string]: [vers: string]
-  }
+    [key: string]: []
+  },
   status: string
 }
 
@@ -20,24 +18,24 @@ export interface AnimalResponse {
 })
 export class AppComponent implements OnInit {
 
-  todos: any = []
+  todos: string[] | undefined;
 
   constructor (
     private http: HttpClient
      ) {}
 
   ngOnInit() {
-    this.getResponse().subscribe (animals => {
-      console.log(Object.values(animals.message).flat())
-      this.todos = animals
-      })
+    this.getResponse()
   }
 
   getResponse() {
-    return this.http.get<AnimalResponse>('https://dog.ceo/api/breeds/list/all', { responseType: 'json'})
-
-    // .pipe(
-    //   map(obj => [...Object.values(obj)]))
-
+    return this.http.get<AnimalResponse>('https://dog.ceo/api/breeds/list/all', {responseType: 'json'})
+      // .pipe(
+      //   map(obj => [...Object.values(obj)]))
+      .subscribe(animalResponse => {
+        console.log(Object.entries(animalResponse.message));
+        this.todos = Object.values(animalResponse.message).flat();
+        // console.log(Object.values(animalResponse.message).flat());
+      })
   }
 }

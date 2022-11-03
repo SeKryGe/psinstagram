@@ -1,13 +1,13 @@
 <div class="card" >
   <label class="dogs" >Choose a dog rase:</label>
   <select id="races">
-    <option value="rase" >...</option>
+    <ng-container *ngFor="let todo of todos">
+      <option value="test">{{todo}}</option>
+    </ng-container>
   </select>
 </div>
 
 <div ></div>
-
-
 
 
 
