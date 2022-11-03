@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { map, pluck } from 'rxjs';
 
 
 
-export interface Todo {
+export interface AnimalResponse {
   message: {
-    race: string[]
+    [key: string]: []
   },
   status: string
 }
@@ -19,7 +18,7 @@ export interface Todo {
 })
 export class AppComponent implements OnInit {
 
-  todos: Todo[] = []
+  todos: string[] | undefined;
 
   constructor (
     private http: HttpClient
@@ -30,12 +29,13 @@ export class AppComponent implements OnInit {
   }
 
   getResponse() {
-    return this.http.get<Todo[]>('https://dog.ceo/api/breeds/list/all', { responseType: 'json'})
-    .pipe(
-      map(obj => [...Object.values(obj)]))
-    .subscribe (todos => {
-    console.log(todos)
-    this.todos = todos
-    })
+    return this.http.get<AnimalResponse>('https://dog.ceo/api/breeds/list/all', {responseType: 'json'})
+      // .pipe(
+      //   map(obj => [...Object.values(obj)]))
+      .subscribe(animalResponse => {
+        console.log(Object.entries(animalResponse.message));
+        this.todos = Object.values(animalResponse.message).flat();
+        // console.log(Object.values(animalResponse.message).flat());
+      })
   }
 }
