@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { map, tap } from 'rxjs';
 
 
 
-export interface AnimalResponse {
+
+export interface Response {
   message: {
-    [key: string]: []
+    inner: string[]
   },
   status: string
 }
@@ -16,26 +18,45 @@ export interface AnimalResponse {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  todos: string[] | undefined;
+  dogs: string[] = []
+  img = ''
+  race = ''
 
-  constructor (
-    private http: HttpClient
-     ) {}
+
+
+  constructor(
+    private http: HttpClient,
+
+  ) { }
 
   ngOnInit() {
     this.getResponse()
   }
 
   getResponse() {
-    return this.http.get<AnimalResponse>('https://dog.ceo/api/breeds/list/all', {responseType: 'json'})
-      // .pipe(
-      //   map(obj => [...Object.values(obj)]))
-      .subscribe(animalResponse => {
-        console.log(Object.entries(animalResponse.message));
-        this.todos = Object.values(animalResponse.message).flat();
-        // console.log(Object.values(animalResponse.message).flat());
+    return this.http.get<Response>('https://dog.ceo/api/breeds/list/all', { responseType: 'json' })
+      .subscribe(res => {
+
+        for (const [breed, subbreed] of Object.entries(res.message)) {
+          this.dogs.push(breed)
+          for (let spec of subbreed) {
+            this.dogs.push(breed + ' ' + subbreed)
+          }
+        }
       })
   }
+
+
+
+  getDog($event: any) {
+    this.race = $event.target.value
+    return this.http.get<Response>(`https://dog.ceo/api/breed/${this.race}/images/random`)
+      .subscribe(img => {
+        this.img = Object.values(img)[0]
+      })
+  }
+
+
 }

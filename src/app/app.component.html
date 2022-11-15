@@ -1,15 +1,41 @@
-<div class="card" >
-  <label class="dogs" >Choose a dog rase:</label>
-  <select id="races">
-    <ng-container *ngFor="let todo of todos">
-      <option value="test">{{todo}}</option>
-    </ng-container>
-  </select>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<div ></div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container m-2 text-center">
+    <div class="row">
+      <div class="col">
+        <label class="dogs">Choose a dog rase:</label>
+        <select class="form-select" (click)="getDog($event)" id="races">
+          <option selected>Select your dog</option>
+          <option *ngFor="let dog of dogs">{{dog}}</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <div class="img-fluid">
+          <!-- Render Img here -->
+          <img [src]="img" alt="Place image">
+        </div>
+        <div id="info">
+          <p>Poczytaj o tej rasie więcej na wikipedii: <a href="'https://en.wikipedia.org/wiki/'${race}'">{{race}}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
+</body>
 
-
+</html>
