@@ -11,31 +11,27 @@
 </head>
 
 <body>
-  <div class="container m-2 text-center">
+  <div class="container-xl m-2 text-center">
     <div class="row">
-      <div class="col">
+      <div class="col-sm-6">
         <label class="dogs">Choose a dog rase:</label>
-        <select class="form-select" (click)="getDog($event)" id="races">
+        <select class="form-select" (change)="getDog($event)" id="races">
           <option selected>Select your dog</option>
           <option *ngFor="let dog of dogs">{{dog}}</option>
         </select>
       </div>
 
-      <div class="col">
-        <div class="img-fluid">
+      <div class="col-sm-6">
+        <div >
           <!-- Render Img here -->
-          <img [src]="img" alt="Place image">
+          <img [src]="img" alt="Place image" class="img-fluid">
         </div>
         <div id="info">
-          <p>Poczytaj o tej rasie więcej na wikipedii: <a href="'https://en.wikipedia.org/wiki/'${race}'">{{race}}</a>
+          <p> Poczytaj o tej rasie więcej na wikipedii: <a href="https://en.wikipedia.org/wiki/{{race}}">{{race}}</a>
           </p>
         </div>
       </div>
     </div>
   </div>
-
-
-
 </body>
-
 </html>
