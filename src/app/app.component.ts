@@ -42,7 +42,7 @@ export class AppComponent {
         for (const [breed, subbreed] of Object.entries(res.message)) {
           this.dogs.push(breed)
           for (let spec of subbreed) {
-            this.dogs.push(breed + ' ' + subbreed)
+            this.dogs.push(breed + ' ' + spec)
           }
         }
       })
